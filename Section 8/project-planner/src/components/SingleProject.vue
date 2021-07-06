@@ -3,7 +3,9 @@
     <div class="actions">
       <h3 @click="displayDetails = !displayDetails">{{ project.title }}</h3>
       <div class="icons">
-        <span class="material-icons">edit</span>
+        <router-link :to="{ name: 'EditProject', params: { id: project.id} }">
+          <span class="material-icons">edit</span>
+        </router-link>
         <span @click="deleteProject" class="material-icons">delete</span>
         <span @click="toggleComplete" class="material-icons tick">done</span>
       </div>
@@ -34,16 +36,16 @@ export default {
     toggleComplete() {
       // patch request to update data -> send object that represents property to be updated
       fetch(this.uri, {
-        method: 'PATCH',
+        method: "PATCH",
         // sending data with request of type JSON
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         // sending JSON data to server in JSON format
         body: JSON.stringify({ complete: !this.project.complete }),
       })
         .then(() => {
-          this.$emit('complete', this.project.id)
+          this.$emit("complete", this.project.id);
         })
-        .catch((err) => console.log(err.message))
+        .catch((err) => console.log(err.message));
     },
   },
 };
@@ -77,9 +79,9 @@ h3 {
 }
 /* Completed projects */
 .project.complete {
-    border-left: 4px solid #00ce89;
+  border-left: 4px solid #00ce89;
 }
 .project.complete .tick {
-    color: #00ce89;
+  color: #00ce89;
 }
 </style>
